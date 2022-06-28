@@ -1,0 +1,9 @@
+name: PassMe
+version: '${project.version}'
+main: space.staypony.passme.PassMe
+api-version: 1.19
+prefix: PassMe
+load: STARTUP
+authors: [ Twylix ]
+description: Fast, Modern, Easy-to-use, authentication plugin for your Minecraft server.
+website: passme.staypony.space
