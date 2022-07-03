@@ -1,0 +1,90 @@
+# Messages configurations
+# For color codes use "&" symbol.
+# DO NOT remove anything, just edit values
+messages:
+  plugin-prefix: "&7[&6PassMe&7]"
+  remind-register: "&2Protect you account by password! Use: /register <password> <repeat_password>"
+  register-success: "&2Registration successful"
+  login-required: "&cAccount is under PassMe protection"
+  login-hint: "&cVerify you: /login <password>"
+  login-success: "&aLogin successful"
+  logout-success: "&aLogout successful"
+  session-resumed: "&aYour last session has been resumed."
+  wrong-password: "&cWrong password"
+  session-expired: "&8Session has expired"
+  too-many-fails: "&cYou've exceeded your verification tries"
+  password-changed: "&aPassword has been changed"
+  only-for-players: "&cThat command can be executed only by players"
+  login-usage: "&aUse: /login <password>"
+  register-usage: "&aUse: /register <password> <repeat_password>"
+  change-password-usage: "&aUse: /changepassword <old_password> <new_password>"
+  missing-registration: "&aFor that command you need to have password to be set"
+  login-time-exceed: "&cLogin grace time exceed"
+  registration-required: "&cOnly registered player can join this server.\nContact with administrator"
+  registration-hint: "&cRegister: /register <password>"
+  registration-time-exceed: "&cRegistration grace time exceed"
+  registration-must-be-set: "&cDue to auth rules you have to register."
+
+# Sessions configuration
+sessions:
+  # Whether is sessions enabled
+  is-enabled: true
+  # Expiration time for each session (in seconds)
+  # If set 0 session will never expire (dangerous)
+  expiration-time: 86400
+
+# Login configuration
+login:
+  # Max tries to enter password
+  max-tries: 3
+  # Max login grace time (in seconds)
+  login-time-limit: 15
+  # Max registration grace time (in seconds)
+  registration-time-limit: 15
+  # Auth mode.
+  #   "strict" - all player should set up password
+  #   "strong" - player with specified below permission should set up password
+  #   "passive" - players can set up their password when they want
+  mode: "strict"
+
+# Misc rules
+rules:
+  # Only player with password can join
+  registration-required: false
+  # Blacklisted IPs
+  # You can write here ip or specify filepath with IPs like:
+  #   - "blacklist_ips.txt"
+  # With that path PassMe will search file from their directory "plugins/PassMe/blacklist_ips.txt"
+  # If you wish to set another filepath you can use absolute path to the file
+  ip-blacklist:
+    - ""
+  # Similar to blacklisted IPs but just whitelist
+  # Note: if ip in the blacklist and whitelist in the same time it will be removed from blacklist and
+  # saved in whitelist
+  ip-whitelist:
+    - ""
+  # Players with those permissions should set up password,
+  # when login.mode = "strong"
+  strong-mode-permissions:
+    - ""
+  # Allowed command while player in auth session
+  # Note: do not remove: /login, /l commands from that list
+  # otherwise players will not able to log in.
+  allowed-command-during-login:
+    - "/login"
+    - "/l"
+    - "/passme"
+    - "/pm"
+
+
+# WARNING!
+# This is the special zone of plugin configuration
+# If you don't know what to do, please, DO NOT uncomment it
+# Because it could provide problems.
+#
+#overwrites:
+#  database:
+#    init-queries:
+#      - ""
+#    column-names:
+#      - ""

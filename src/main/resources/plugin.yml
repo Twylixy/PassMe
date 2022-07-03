@@ -7,3 +7,23 @@ load: STARTUP
 authors: [ Twylix ]
 description: Fast, Modern, Easy-to-use, authentication plugin for your Minecraft server.
 website: passme.staypony.space
+commands:
+  login:
+    description: Perform login
+    aliases: l
+    usage: /login <password>
+  logout:
+    description: Perform logout
+    usage: /logout
+  register:
+    description: Register and protect account
+    aliases: reg
+    usage: /register <password> <repeat_password>
+  changepassword:
+    description: Change password
+    aliases: cp
+    usage: /changepassword <old password> <new_password>
+  passme:
+    description: PassMe
+    aliases: pm
+    usage: /passme
