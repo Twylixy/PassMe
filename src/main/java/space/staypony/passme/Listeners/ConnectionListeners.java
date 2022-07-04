@@ -22,6 +22,7 @@ public class ConnectionListeners implements Listener {
     @EventHandler
     public void onPlayerJoinNormal(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        player.resetTitle();
 
         if (!AuthService.isPlayerRegistered(player)) {
             if (!AuthService.canPassRegistration(player)) {

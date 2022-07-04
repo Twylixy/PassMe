@@ -5,7 +5,6 @@ import de.mkammerer.argon2.Argon2Factory;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.potion.PotionType;
 import space.staypony.passme.Config.Config;
 import space.staypony.passme.Database.Database;
 import space.staypony.passme.Enums.AuthStatus;
@@ -16,7 +15,6 @@ import space.staypony.passme.Tasks.AuthSessionTask;
 import space.staypony.passme.Tasks.RegistrationSessionTask;
 import space.staypony.passme.Utils.MessageBuilder;
 
-import java.io.Console;
 import java.util.HashMap;
 
 public class AuthService {
@@ -129,8 +127,8 @@ public class AuthService {
         if (Config.login.mode.equals(LoginMode.STRICT)) {
             return false;
         } else if (Config.login.mode.equals(LoginMode.STRONG)) {
-            for (int index = 0; index < Config.rules.stringModePermissions.size(); index++) {
-                if (player.hasPermission(Config.rules.stringModePermissions.get(index)))
+            for (int index = 0; index < Config.rules.strongModePermissions.size(); index++) {
+                if (player.hasPermission(Config.rules.strongModePermissions.get(index)))
                     return false;
             }
             return true;

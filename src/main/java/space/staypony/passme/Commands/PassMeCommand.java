@@ -4,14 +4,14 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import space.staypony.passme.Config.Config;
+import space.staypony.passme.PassMe;
 
 public class PassMeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length == 1 && args[0].equals("reload") && sender.hasPermission("passme.reload")) {
-            Config.reloadValues();
-            sender.sendMessage("Config reloaded");
+            PassMe.updateConfig();
+            sender.sendMessage("[PassMe] Config reloaded");
             return true;
         }
 

@@ -1,5 +1,6 @@
 package space.staypony.passme;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import space.staypony.passme.Commands.*;
@@ -18,9 +19,8 @@ public final class PassMe extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
-        rawConfig = getConfig();
-        Config.reloadValues();
-        Database.initDatabase(getDataFolder() + "\\data.db");
+        updateConfig();
+        Database.initDatabase(getDataFolder() + "/data.db");
 
         getCommand("login").setExecutor(new LoginCommand());
         getCommand("logout").setExecutor(new LogoutCommand(this));
@@ -33,6 +33,13 @@ public final class PassMe extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InteractListeners(), this);
         getServer().getPluginManager().registerEvents(new MiscListeners(), this);
         getLogger().log(Level.INFO, "Ready!");
+    }
+
+    public static void updateConfig() {
+        if (Bukkit.getPluginManager().getPlugin("PassMe") == null) return;
+        Bukkit.getPluginManager().getPlugin("PassMe").reloadConfig();
+        rawConfig = Bukkit.getPluginManager().getPlugin("PassMe").getConfig();
+        Config.reloadValues();
     }
 
     @Override
