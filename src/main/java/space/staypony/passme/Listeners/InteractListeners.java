@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -30,8 +30,9 @@ public class InteractListeners implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onInventoryInteractEventHighest(InventoryOpenEvent event) {
-        if (AuthService.isPlayerInAnySession((Player) event.getPlayer()))
+    public void onInventoryClickEventHighest(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) return;
+        if (AuthService.isPlayerInAnySession((Player) event.getWhoClicked()))
             event.setCancelled(true);
     }
 
@@ -54,8 +55,9 @@ public class InteractListeners implements Listener {
     }
 
     @EventHandler
-    public void onInventoryInteractEventNormal(InventoryOpenEvent event) {
-        if (AuthService.isPlayerInAnySession((Player) event.getPlayer()))
+    public void onInventoryClickEventNormal(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) return;
+        if (AuthService.isPlayerInAnySession((Player) event.getWhoClicked()))
             event.setCancelled(true);
     }
 
@@ -80,6 +82,13 @@ public class InteractListeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryInteractEventLowest(InventoryOpenEvent event) {
         if (AuthService.isPlayerInAnySession((Player) event.getPlayer()))
+            event.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onInventoryClickEventLowest(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) return;
+        if (AuthService.isPlayerInAnySession((Player) event.getWhoClicked()))
             event.setCancelled(true);
     }
 }

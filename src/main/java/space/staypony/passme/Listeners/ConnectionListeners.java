@@ -2,7 +2,6 @@ package space.staypony.passme.Listeners;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -26,7 +25,6 @@ public class ConnectionListeners implements Listener {
 
         if (!AuthService.isPlayerRegistered(player)) {
             if (!AuthService.canPassRegistration(player)) {
-                player.sendMessage(MessageBuilder.buildMessage(Config.messages.registrationMustBeSet));
                 AuthService.beginRegistrationSession(plugin, player);
                 return;
             }
@@ -41,7 +39,6 @@ public class ConnectionListeners implements Listener {
             return;
         }
 
-        player.sendMessage(MessageBuilder.buildMessage(Config.messages.loginRequired));
         AuthService.beginAuthSession(plugin, player);
     }
 
@@ -50,7 +47,7 @@ public class ConnectionListeners implements Listener {
         Player player = event.getPlayer();
 
         if (AuthService.isPlayerRegistered(player) && Config.rules.registrationRequired) return;
-        player.kickPlayer(MessageBuilder.buildMessage(Config.messages.registrationRequired));
+        player.kickPlayer(MessageBuilder.buildClearMessage(Config.messages.registrationRequired));
     }
 
     @EventHandler

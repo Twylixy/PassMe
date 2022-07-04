@@ -25,14 +25,14 @@ public class Database {
             String createUsersQuery =
                     "CREATE TABLE users " +
                     "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "uuid TEXT NOT NULL," +
+                    "username TEXT NOT NULL," +
                     "hash TEXT NOT NULL," +
                     "isProtected BOOL DEFAULT 1);";
 
             String createSessionsQuery =
                     "CREATE TABLE sessions" +
                     "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "uuid TEXT NOT NULL," +
+                    "username TEXT NOT NULL," +
                     "ip TEXT NOT NULL," +
                     "createdAt INTEGER NOT NULL," +
                     "expiresAt INTEGER NOT NULL);";
@@ -53,12 +53,12 @@ public class Database {
         }
     }
 
-    public static void addPlayer(String uuid, String hash) {
+    public static void addPlayer(String username, String hash) {
         try {
-            String sql = "INSERT INTO users (uuid, hash) VALUES (?, ?);";
+            String sql = "INSERT INTO users (username, hash) VALUES (?, ?);";
 
             PreparedStatement statement = databaseConnection.prepareStatement(sql);
-            statement.setString(1, uuid);
+            statement.setString(1, username);
             statement.setString(2, hash);
 
             statement.executeUpdate();
@@ -69,12 +69,12 @@ public class Database {
     }
 
     @Nullable
-    public static PlayerDatabaseEntity getPlayer(String uuid) {
+    public static PlayerDatabaseEntity getPlayer(String username) {
         try {
-            String sql = "SELECT * FROM users WHERE uuid=?;";
+            String sql = "SELECT * FROM users WHERE username=?;";
 
             PreparedStatement statement = databaseConnection.prepareStatement(sql);
-            statement.setString(1, uuid);
+            statement.setString(1, username);
 
             ResultSet rs = statement.executeQuery();
 
@@ -86,7 +86,7 @@ public class Database {
 
             PlayerDatabaseEntity playerDatabaseEntity = new PlayerDatabaseEntity(
                     rs.getInt("id"),
-                    rs.getString("uuid"),
+                    rs.getString("username"),
                     rs.getString("hash"),
                     rs.getBoolean("isProtected")
             );
@@ -99,13 +99,13 @@ public class Database {
         return null;
     }
 
-    public static void updatePlayerHash(String uuid, String newHash) {
+    public static void updatePlayerHash(String username, String newHash) {
         try {
-            String sql = "UPDATE users SET hash=? WHERE uuid=?;";
+            String sql = "UPDATE users SET hash=? WHERE username=?;";
 
             PreparedStatement statement = databaseConnection.prepareStatement(sql);
             statement.setString(1, newHash);
-            statement.setString(2, uuid);
+            statement.setString(2, username);
 
             statement.executeUpdate();
             statement.close();
@@ -114,15 +114,15 @@ public class Database {
         }
     }
 
-    public static void addPlayerSession(String uuid, String ip) {
+    public static void addPlayerSession(String username, String ip) {
         long createdAt = Instant.now().getEpochSecond();
         long expiresAt = createdAt + Config.sessions.expirationTime;
 
         try {
-            String sql = "INSERT INTO sessions (uuid, ip, createdAt, expiresAt) VALUES (?, ?, ?, ?);";
+            String sql = "INSERT INTO sessions (username, ip, createdAt, expiresAt) VALUES (?, ?, ?, ?);";
 
             PreparedStatement statement = databaseConnection.prepareStatement(sql);
-            statement.setString(1, uuid);
+            statement.setString(1, username);
             statement.setString(2, ip);
             statement.setLong(3, createdAt);
             statement.setLong(4, expiresAt);
@@ -135,14 +135,14 @@ public class Database {
     }
 
     @Nullable
-    public static SessionDatabaseEntity getValidSession(String uuid, String ip) {
+    public static SessionDatabaseEntity getValidSession(String username, String ip) {
         long now = Instant.now().getEpochSecond();
 
         try {
-            String sql = "SELECT * FROM sessions WHERE uuid=? AND expiresAt > ? AND ip=?;";
+            String sql = "SELECT * FROM sessions WHERE username=? AND expiresAt > ? AND ip=?;";
 
             PreparedStatement statement = databaseConnection.prepareStatement(sql);
-            statement.setString(1, uuid);
+            statement.setString(1, username);
             statement.setLong(2, now);
             statement.setString(3, ip);
 
@@ -156,7 +156,7 @@ public class Database {
 
             SessionDatabaseEntity sessionDatabaseEntity = new SessionDatabaseEntity(
                     rs.getInt("id"),
-                    rs.getString("uuid"),
+                    rs.getString("username"),
                     rs.getString("ip"),
                     rs.getLong("createdAt"),
                     rs.getLong("expiresAt")
@@ -178,6 +178,20 @@ public class Database {
 
             PreparedStatement statement = databaseConnection.prepareStatement(sql);
             statement.setInt(1, id);
+
+            statement.executeUpdate();
+            statement.close();
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void purgeSessions(String username) {
+        try {
+            String sql = "DELETE FROM sessions WHERE username=?;";
+
+            PreparedStatement statement = databaseConnection.prepareStatement(sql);
+            statement.setString(1, username);
 
             statement.executeUpdate();
             statement.close();

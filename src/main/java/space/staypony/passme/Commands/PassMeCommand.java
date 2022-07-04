@@ -1,15 +1,20 @@
 package space.staypony.passme.Commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import space.staypony.passme.Config.Config;
 
 public class PassMeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length == 1 && args[0].equals("reload") && sender.hasPermission("passme.reload")) {
+            Config.reloadValues();
+            sender.sendMessage("Config reloaded");
+            return true;
+        }
+
         String pluginMessage = "&6&lPassMe &r&7- &2Authentication plugin&r\n" +
                 "    &9Created by: &7Twylix\n" +
                 "    &9Github: &7https://github.com/Twylixy/PassMe/\n" +

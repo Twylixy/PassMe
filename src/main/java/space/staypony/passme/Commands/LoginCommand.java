@@ -30,7 +30,7 @@ public class LoginCommand implements CommandExecutor {
 
         Player player = (Player) sender;
         String playerIp = SessionService.resolvePlayerIp(player);
-        PlayerDatabaseEntity playerDatabaseEntity = Database.getPlayer(player.getUniqueId().toString());
+        PlayerDatabaseEntity playerDatabaseEntity = Database.getPlayer(player.getName());
         char[] password = args[0].toCharArray();
 
         try {
@@ -38,11 +38,12 @@ public class LoginCommand implements CommandExecutor {
                 AuthService.closeAuthSession(player, true);
 
                 if (playerIp != null)
-                    Database.addPlayerSession(player.getUniqueId().toString(), playerIp);
+                    Database.addPlayerSession(player.getName(), playerIp);
 
                 sender.sendMessage(MessageBuilder.buildMessage(Config.messages.loginSuccess));
             } else {
                 sender.sendMessage(MessageBuilder.buildMessage(Config.messages.wrongPassword));
+                AuthService.addLoginFail(player);
             }
         } catch (Exception exception) {
             exception.printStackTrace();

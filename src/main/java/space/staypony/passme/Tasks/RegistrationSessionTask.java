@@ -1,5 +1,7 @@
 package space.staypony.passme.Tasks;
 
+import net.md_5.bungee.api.ChatMessageType;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import space.staypony.passme.Config.Config;
@@ -22,10 +24,9 @@ public class RegistrationSessionTask extends BukkitRunnable {
     public void run() {
         if (status != RegistrationStatus.SUCCESS) {
             if (Instant.now().getEpochSecond() >= registrationSessionExpires) {
-                player.kickPlayer(MessageBuilder.buildMessage(Config.messages.registrationTimeExceed));
+                player.kickPlayer(MessageBuilder.buildClearMessage(Config.messages.registrationTimeExceed));
                 cancel();
             }
-            player.sendMessage(MessageBuilder.buildMessage(Config.messages.registrationHint));
         } else {
             cancel();
         }

@@ -23,10 +23,9 @@ public class AuthSessionTask extends BukkitRunnable {
     public void run() {
         if (status != AuthStatus.SUCCESS) {
             if (Instant.now().getEpochSecond() >= authSessionExpires) {
-                player.kickPlayer(MessageBuilder.buildMessage(Config.messages.loginTimeExceed));
+                player.kickPlayer(MessageBuilder.buildClearMessage(Config.messages.loginTimeExceed));
                 cancel();
             }
-            player.sendMessage(MessageBuilder.buildMessage(Config.messages.loginHint));
         } else {
             cancel();
         }

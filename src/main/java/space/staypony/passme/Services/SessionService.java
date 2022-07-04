@@ -18,14 +18,18 @@ public class SessionService {
         String playerIp = resolvePlayerIp(player);
 
         if (playerIp == null) return false;
-        return Database.getValidSession(player.getUniqueId().toString(), playerIp) != null;
+        return Database.getValidSession(player.getName(), playerIp) != null;
+    }
+
+    public static void purgeSessions(Player player) {
+        Database.purgeSessions(player.getName());
     }
 
     public static void dropActiveSession(Player player) {
         String playerIp = resolvePlayerIp(player);
 
         if (playerIp == null) return;
-        SessionDatabaseEntity sessionDatabaseEntity = Database.getValidSession(player.getUniqueId().toString(), playerIp);
+        SessionDatabaseEntity sessionDatabaseEntity = Database.getValidSession(player.getName(), playerIp);
 
         if (sessionDatabaseEntity == null) return;
         Database.dropSession(sessionDatabaseEntity.id);

@@ -18,13 +18,17 @@ public class MessagesField extends AbstractField {
     public String onlyForPlayers;
     public String loginUsage;
     public String registerUsage;
+    public String registerConsoleUsage;
     public String changePasswordUsage;
+    public String changePasswordConsoleUsage;
     public String missingRegistration;
     public String loginTimeExceed;
     public String registrationRequired;
     public String registrationHint;
     public String registrationTimeExceed;
     public String registrationMustBeSet;
+    public String playerNotFound;
+    public String passwordsNotEquals;
 
     @Override
     public void reloadValues() {
@@ -43,12 +47,16 @@ public class MessagesField extends AbstractField {
         onlyForPlayers = PassMe.rawConfig.getString("messages.only-for-players");
         loginUsage = PassMe.rawConfig.getString("messages.login-usage");
         registerUsage = PassMe.rawConfig.getString("messages.register-usage");
+        registerConsoleUsage = PassMe.rawConfig.getString("messages.register-console-usage");
         changePasswordUsage = PassMe.rawConfig.getString("messages.change-password-usage");
+        changePasswordConsoleUsage = PassMe.rawConfig.getString("messages.change-password-console-usage");
         missingRegistration = PassMe.rawConfig.getString("messages.missing-registration");
         loginTimeExceed = PassMe.rawConfig.getString("messages.login-time-exceed");
         registrationRequired = PassMe.rawConfig.getString("messages.registration-required");
         registrationHint = PassMe.rawConfig.getString("messages.registration-hint");
         registrationTimeExceed = PassMe.rawConfig.getString("messages.registration-time-exceed");
         registrationMustBeSet = PassMe.rawConfig.getString("messages.registration-must-be-set");
+        playerNotFound = PassMe.rawConfig.getString("messages.player-not-found");
+        passwordsNotEquals = PassMe.rawConfig.getString("messages.passwords-not-equals");
     }
 }

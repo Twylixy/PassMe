@@ -10,6 +10,8 @@ import space.staypony.passme.Listeners.ConnectionListeners;
 import space.staypony.passme.Listeners.InteractListeners;
 import space.staypony.passme.Listeners.MiscListeners;
 
+import java.util.logging.Level;
+
 public final class PassMe extends JavaPlugin {
     public static FileConfiguration rawConfig;
 
@@ -30,10 +32,12 @@ public final class PassMe extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ConnectionListeners(this), this);
         getServer().getPluginManager().registerEvents(new InteractListeners(), this);
         getServer().getPluginManager().registerEvents(new MiscListeners(), this);
+        getLogger().log(Level.INFO, "Ready!");
     }
 
     @Override
     public void onDisable() {
         Database.disposeDatabase();
+        getLogger().log(Level.INFO, "Disabled!");
     }
 }
