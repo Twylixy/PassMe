@@ -15,6 +15,9 @@ import space.staypony.passme.Services.AuthService;
 public class MiscListeners implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChatMessageAsyncHighest(AsyncPlayerChatEvent event) {
+        if (!AuthService.isPlayerInAnySession(event.getPlayer()))
+            return;
+
         String command = event.getMessage().split(" ")[0];
 
         if (!Config.rules.allowedCommandsDuringLogin.contains(command))
@@ -23,6 +26,9 @@ public class MiscListeners implements Listener {
 
     @EventHandler
     public void onChatMessageAsyncNormal(AsyncPlayerChatEvent event) {
+        if (!AuthService.isPlayerInAnySession(event.getPlayer()))
+            return;
+
         String command = event.getMessage().split(" ")[0];
 
         if (!Config.rules.allowedCommandsDuringLogin.contains(command))
@@ -31,6 +37,9 @@ public class MiscListeners implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onChatMessageAsyncLowest(AsyncPlayerChatEvent event) {
+        if (!AuthService.isPlayerInAnySession(event.getPlayer()))
+            return;
+
         String command = event.getMessage().split(" ")[0];
 
         if (!Config.rules.allowedCommandsDuringLogin.contains(command))
